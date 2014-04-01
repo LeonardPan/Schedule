@@ -1,0 +1,1 @@
+<div id='authorInfo'>Web site created by <a href="http://www.weibo.com/4everpan">Leoanrd Pan</a></div>
