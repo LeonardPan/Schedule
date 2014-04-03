@@ -5,16 +5,26 @@
 	</form>
 </div>
 <div>
+	<?php
+		$weekarray = array( 
+		    0 => "星期一", 
+		    1 => "星期二", 
+		    2 => "星期三", 
+		    3 => "星期四", 
+		    4 => "星期五", 
+		    5 => "星期六", 
+		    6 => "星期天" 
+		); 
+	?>
 	<table id="WeekTable" border="1">
-		<caption><?php echo "2014"."年". "4" ."月" ?></caption>
+		<caption><?php echo $year."年". $month ."月" . $day . "日	星期" . $day_of_week ?></caption>
 		<tr>
-			<th>星期一</th>
-			<th>星期二</th>
-			<th>星期三</th>
-			<th>星期四</th>
-			<th>星期五</th>
-			<th>星期六</th>
-			<th>星期天</th>
+			<?php
+			for ($i = 0; $i < 7; $i++)
+			{
+				echo "<th>$weekarray[$i]</th>";
+			}
+			?>
 		</tr>
 		<tr>
 			<?php 

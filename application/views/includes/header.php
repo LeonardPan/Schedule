@@ -16,7 +16,7 @@
 	<script type="text/javascript">
 		$(document).ready(function(e){
 			$('#WeekTable').click(function(e){
-				//if($(e.target).prop("tagName") == "td")
+				if($(e.target).prop("tagName").toLowerCase() == "td")
 				{
 					alert(e.target.id);
 				}
