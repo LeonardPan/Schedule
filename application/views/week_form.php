@@ -43,6 +43,7 @@
 				$task_E_array[$task->w_day] = $task->flag;
 			}
 		}
+
 	?>
 	<table id="WeekTable" border="1">
 		<caption><?php echo $year."年". $month ."月" . $day . "日	星期" . $day_of_week ?></caption>
@@ -63,7 +64,9 @@
 				echo "<td ";
 				if (array_key_exists($i, $task_A_array))
 				{
-					if($task_A_array[$i] == 1)
+					if($task_A_array[$i] == null)
+						echo "class=unknown ";
+					elseif($task_A_array[$i] == 1)
 						echo "class=pass ";
 					elseif ($task_A_array[$i] == 0)
 						echo "class=fail ";
@@ -85,7 +88,9 @@
 				echo "<td ";
 				if (array_key_exists($i, $task_B_array))
 				{
-					if($task_B_array[$i] == 1)
+					if($task_B_array[$i] == null)
+						echo "class=unknown ";
+					elseif($task_B_array[$i] == 1)
 						echo "class=pass ";
 					elseif ($task_B_array[$i] == 0)
 						echo "class=fail ";
@@ -107,7 +112,9 @@
 				echo "<td ";
 				if (array_key_exists($i, $task_C_array))
 				{
-					if($task_C_array[$i] == 1)
+					if($task_C_array[$i] == null)
+						echo "class=unknown ";
+					elseif($task_C_array[$i] == 1)
 						echo "class=pass ";
 					elseif ($task_C_array[$i] == 0)
 						echo "class=fail ";
@@ -129,7 +136,9 @@
 				echo "<td ";
 				if (array_key_exists($i, $task_D_array))
 				{
-					if($task_D_array[$i] == 1)
+					if($task_D_array[$i] == null)
+						echo "class=unknown ";
+					elseif($task_D_array[$i] == 1)
 						echo "class=pass ";
 					elseif ($task_D_array[$i] == 0)
 						echo "class=fail ";
@@ -151,7 +160,9 @@
 				echo "<td ";
 				if (array_key_exists($i, $task_E_array))
 				{
-					if($task_E_array[$i] == 1)
+					if($task_E_array[$i] == null)
+						echo "class=unknown ";
+					elseif($task_E_array[$i] == 1)
 						echo "class=pass ";
 					elseif ($task_E_array[$i] == 0)
 						echo "class=fail ";

@@ -21,7 +21,7 @@
 					var lFlag = $(e.target).attr('class');
 					var lDay = e.target.id.split('-')[1];
 					var lTask = e.target.id.split('-')[2];
-					
+
 					$.ajax({
 						url: window.location,
 						type: 'POST',
