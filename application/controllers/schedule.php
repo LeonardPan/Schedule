@@ -6,6 +6,36 @@ class Schedule extends CI_Controller {
 		$this->display_weekly_calendar();
 	}
 
+	function previous_week($year, $week)
+	{
+		if ($year && $week)
+		{
+			if ($week > 1)
+				$week = $week - 1;
+			else
+			{
+				$year = $year - 1;
+				$week = 52;
+			}
+		}
+		$this->display_weekly_calendar($year, $week);
+	}
+
+	function next_week($year, $week)
+	{
+		if ($year && $week)
+		{
+			if ($week > 51)
+			{
+				$year = $year + 1;
+				$week = 1;
+			}
+			else
+				$week = $week + 1;
+		}
+		$this->display_weekly_calendar($year, $week);
+	}
+
 	function display_weekly_calendar ($year = null, $week = null)
 	{
 		if (!$year) {

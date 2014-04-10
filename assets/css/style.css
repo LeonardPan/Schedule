@@ -127,7 +127,29 @@ td.unknown {
     background-position: -28px 0px;
 } 
 
- #nextMonth {
+#previousWeek {
+	background-image: url(../imgs/arrows.png);
+	background-position: 0px 0px;
+	width: 20px;
+}
+
+#previousWeek:hover {
+    background-image: url(../imgs/arrows.png);
+    background-position: -28px 0px;
+} 
+
+#nextWeek {
+	background-image: url(../imgs/arrows.png);
+	background-position: -5px -28px;
+	width: 20px;
+}
+
+#nextWeek:hover {
+    background-image: url(../imgs/arrows.png);
+    background-position: -33px -28px;
+}
+
+#nextMonth {
 	background-image: url(../imgs/arrows.png);
 	background-position: -5px -28px;
 	width: 20px;
@@ -138,7 +160,7 @@ td.unknown {
     background-position: -33px -28px;
 }
 
-#previousMonth, #nextMonth, #nextYear, #previousYear {
+#previousWeek, #nextWeek, #previousMonth, #nextMonth, #nextYear, #previousYear {
     background-repeat: no-repeat;
     font-size: 18pt;
     position: relative;
