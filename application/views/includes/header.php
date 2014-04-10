@@ -7,10 +7,10 @@
 
 	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" type="text/css" media="screen" charset="utf-8">
 
-	<!-- <link rel="stylesheet" href="<?php echo base_url();?>css/bootstrap.css" 
-	type="text/css" media="screen" charset="utf-8">
-	<link rel="stylesheet" href="<?php echo base_url();?>css/style.css"
+	<!-- <link rel="stylesheet" href="<?php echo asset_url();?>css/bootstrap.css" 
 	type="text/css" media="screen" charset="utf-8"> -->
+	<link rel="stylesheet" href="<?php echo asset_url();?>css/style.css"
+	type="text/css" media="screen" charset="utf-8">
 	
 	<script type='text/javascript' src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 	<script type="text/javascript">

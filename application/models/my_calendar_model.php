@@ -26,7 +26,7 @@ class My_calendar_model extends CI_Model {
 		return $day;
 	}
 
-	function trigger_task_in_weekly_calendar($w_day, $task, $flag, $uid = 1, $year = null, $week = null)
+	function trigger_task_in_weekly_calendar($w_day, $task, $flag=null, $uid = 1, $year = null, $week = null)
 	{
 		if (!$year)
 			$year = date('Y');
@@ -40,14 +40,17 @@ class My_calendar_model extends CI_Model {
 		else
 			$flag = null;
 
-		if ($this->db->select('task')
+		if ($this->db->select('flag')
 				->from('weekly_calendar_tasks')
 				->where('uid', $uid)
 				->where('year', $year)
 				->where('week', $week)
 				->where('w_day', $w_day)
-				->count_all_results())
+				->where('task', $task)
+				->count_all_results()
+			)
 		{
+			echo "<script type='text/javascript'>alert('Here');</script>";
 			$this->db->where('uid', $uid)
 				->where('year', $year)
 				->where('week', $week)
@@ -56,10 +59,7 @@ class My_calendar_model extends CI_Model {
 				->update('weekly_calendar_tasks', array(
 						'flag' => $flag
 					)
-				);
-			echo "<SCRIPT>
-				alert('$flag');
-				</SCRIPT>";
+			);
 		}
 		else
 		{

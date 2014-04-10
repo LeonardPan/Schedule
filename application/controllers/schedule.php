@@ -17,12 +17,13 @@ class Schedule extends CI_Controller {
 
 		$this->load->model('My_calendar_model');
 
-		//handle the ajex case
+		//handle the ajax case
 		if ($w_day = $this->input->post('w_day')) {
 			$task = $this->input->post('task');
 			$flag = $this->input->post('flag');
+
 			$this->My_calendar_model->trigger_task_in_weekly_calendar(
-				"$w_day","$task", "$flag"
+				"$w_day", "$task", "$flag"
 			);
 		}
 
