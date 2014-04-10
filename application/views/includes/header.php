@@ -5,10 +5,11 @@
 	<meta http-equiv="Content-Type" content="text/html"; charset=utf-8">
 	<title>untitled</title>
 
-	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" type="text/css" media="screen" charset="utf-8">
+	<!-- <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" type="text/css" media="screen" charset="utf-8"> -->
 
-	<!-- <link rel="stylesheet" href="<?php echo asset_url();?>css/bootstrap.css" 
-	type="text/css" media="screen" charset="utf-8"> -->
+	<link rel="stylesheet" href="<?php echo asset_url();?>css/bootstrap.css" 
+	type="text/css" media="screen" charset="utf-8">
+	
 	<link rel="stylesheet" href="<?php echo asset_url();?>css/style.css"
 	type="text/css" media="screen" charset="utf-8">
 	

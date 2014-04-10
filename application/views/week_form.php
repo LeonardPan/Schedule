@@ -45,8 +45,21 @@
 		}
 
 	?>
+	<div class="navigations">
+		<div style="width: 300px;">
+			<a href="" id="previousMonth" title="Previous Month">&nbsp;</a>
+			<span>&nbsp;&nbsp;</span>
+			<a href="" id="previousWeek" title="Previous Week">&nbsp;</a>
+		</div>
+		<div class="current_date" style="width: 300px;"><?php echo $year."年". $month ."月" . $day . "日	星期" . $day_of_week ?></div>
+		<div style="width: 300px;">
+			<a href="" id="nextWeek" title="Next Week">&nbsp;</a>
+			<span>&nbsp;&nbsp;</span>
+			<a href="" id="nextMonth" title="Next Month">&nbsp;</a>
+		</div>
+	</div>
 	<table id="WeekTable" border="1">
-		<caption><?php echo $year."年". $month ."月" . $day . "日	星期" . $day_of_week ?></caption>
+		<!-- <caption><?php echo $year."年". $month ."月" . $day . "日	星期" . $day_of_week ?></caption> -->
 		<tr>
 			<?php
 			//table head

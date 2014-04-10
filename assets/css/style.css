@@ -79,6 +79,9 @@ h1 {
 	padding: .7em .7em .7em 2em;
 }
 
+/*start from here*/
+
+/*table*/
 td.pass {
 	background-color:lightgreen;
 }
@@ -88,5 +91,69 @@ td.fail {
 }
 
 td.unknown {
-	background-color:lightgray;
+	background-color:white;
+}
+
+/*navication*/
+#previousYear {
+    background-image: url(../imgs/arrows.png);
+    background-position: 0px -85px;
+    width: 28px;
+}
+
+#previousYear:hover {
+    background-position: -28px -85px;
+}
+
+#nextYear {
+	background-image: url(../imgs/arrows.png);
+	background-position: 0px -56px;
+	width: 28px;
+}
+
+#nextYear:hover {
+    background-image: url(../imgs/arrows.png);
+    background-position: -28px -56px;
+}
+
+#previousMonth {
+	background-image: url(../imgs/arrows.png);
+	background-position: 0px 0px;
+	width: 20px;
+}
+
+#previousMonth:hover {
+    background-image: url(../imgs/arrows.png);
+    background-position: -28px 0px;
+} 
+
+ #nextMonth {
+	background-image: url(../imgs/arrows.png);
+	background-position: -5px -28px;
+	width: 20px;
+}
+
+#nextMonth:hover {
+    background-image: url(../imgs/arrows.png);
+    background-position: -33px -28px;
+}
+
+#previousMonth, #nextMonth, #nextYear, #previousYear {
+    background-repeat: no-repeat;
+    font-size: 18pt;
+    position: relative;
+    display: inline-block;
+    overflow : hidden;
+    cursor: pointer;
+}
+
+.navigations{
+    overflow: hidden;
+    height: 30px;
+    line-height: 28px;
+}
+
+.navigations div {
+    float: left;    
+    text-align: center;
 }
