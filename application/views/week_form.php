@@ -15,33 +15,96 @@
 		    5 => "星期六", 
 		    6 => "星期天" 
 		); 
-		$task_A_array = array();
-		$task_B_array = array();
-		$task_C_array = array();
-		$task_D_array = array();
-		$task_E_array = array();
+
+		$tasks_array = array(
+			/* config of weekly schedule table content
+			'Task ID' => array ( 
+						'Work day tasks' => array of tasks( 
+										0 => array( "content" => "按点睡觉<br>（23:00前入睡，<br>7:00-7:30之间起床）",
+						    						"time_range" => null
+						    						)
+						    			),
+						'weekend tasks' => array( 
+										0 => array( "content" => "按点睡觉<br>（23:30前入睡，<br>9:30前起床）",
+													"time_range" => null
+													)
+										),
+						"task value" => 1
+						),
+			*/
+			'A' => array( 
+						'work_day' => array( 
+										0 => array( "content" => "按点睡觉<br>（23:00前入睡，<br>7:00-7:30之间起床）",
+						    						"time_range" => null
+						    						)
+						    			),
+						'weekend' => array( 
+										0 => array( "content" => "按点睡觉<br>（23:30前入睡，<br>9:30前起床）",
+													"time_range" => null
+													)
+										),
+						'w_days_array' => array(),
+						"value" => 1
+						),
+			'B' => array( 
+						'work_day' => array( 
+										0 => array( "content" => "申论模考<br>或 行测补考及解析",
+						    						"time_range" => "9:30-11:30"
+						    						)
+						    			),
+						'weekend' => array( 
+										0 => array( "content" => "行测模考",
+													"time_range" => "10:00-12:00"
+													)
+										),
+						'w_days_array' => array(),
+						"value" => 1
+						),
+			'C' => array( 
+						'work_day' => array( 
+										0 => array( "content" => "午睡",
+						    						"time_range" => "12:00-13:30"
+						    						)
+						    			),
+						'weekend' => array( 
+										0 => array( "content" => "午睡",
+													"time_range" => "12:30-14:30"
+													)
+										),
+						'w_days_array' => array(),
+						"value" => 1
+						),
+			'D' => array( 
+						'work_day' => array( 
+										0 => array( "content" => "行测模考",
+						    						"time_range" => "13:30-15:30"
+						    						),
+										1 => array( "content" => "申论解析",
+													"time_range" => "14:30-16:30"
+													)
+						    			),
+						'weekend' => array( 
+										0 => array( "content" => "行测补考及解析",
+													"time_range" => "14:30-16:30"
+													)
+										),
+						'w_days_array' => array(),
+						"value" => 1
+						),
+			'E' => array( 
+						'work_day' => array( 
+										0 => array( "content" => "行测补考及解析<br>或 视频课程",
+						    						"time_range" => "19:00-21:00"
+						    						)
+						    			),
+						'weekend' => null,
+						'w_days_array' => array(),
+		    			"value" => 1
+						)
+			);
 
 		foreach ($tasks as $task) {
-			if ($task->task == 'A')
-			{
-				$task_A_array[$task->w_day] = $task->flag;
-			}
-			elseif ($task->task == 'B')
-			{
-				$task_B_array[$task->w_day] = $task->flag;
-			}
-			elseif ($task->task == 'C')
-			{
-				$task_C_array[$task->w_day] = $task->flag;
-			}
-			elseif ($task->task == 'D')
-			{
-				$task_D_array[$task->w_day] = $task->flag;
-			}
-			elseif ($task->task == 'E')
-			{
-				$task_E_array[$task->w_day] = $task->flag;
-			}
+			$tasks_array[$task->task]['w_days_array'][$task->w_day] = $task->flag;
 		}
 
 	?>
@@ -65,123 +128,60 @@
 			}
 			?>
 		</tr>
-		<tr>
-			<?php 
-			//task A
-			for ($i = 0; $i < 7; $i++)
-			{
-				echo "<td ";
-				if (array_key_exists($i, $task_A_array))
+
+		<?php
+			foreach ($tasks_array as $task_type => $task_config) {
+				echo "<tr>";
+				for ($i = 0; $i < 7; $i++)
 				{
-					if($task_A_array[$i] == null)
-						echo "class=unknown ";
-					elseif($task_A_array[$i] == 1)
-						echo "class=pass ";
-					elseif ($task_A_array[$i] == 0)
-						echo "class=fail ";
+					if ($i < 5 || $task_config['weekend'])
+						echo "<td";
+					//task flag
+					if (array_key_exists($i, $task_config['w_days_array']) && ($i < 5 || $task_config['weekend']))
+					{
+						if($task_config['w_days_array'][$i] == null)
+							echo " class=unknown ";
+						elseif($task_config['w_days_array'][$i] == 1)
+							echo " class=pass ";
+						elseif ($task_config['w_days_array'][$i] == 0)
+							echo " class=fail ";
+					}
+					elseif ($i < 5 || $task_config['weekend'])
+						echo " class=unknown ";
+					//print id with format week-day-task
+					if ($i < 5 || $task_config['weekend'])
+						echo "id='week-$i-$task_type'>";
+					//work day
+					if ($i < 5)
+					{
+						foreach ($task_config['work_day'] as $display) {
+							echo $display['content'];
+							echo "<br>";
+							if($display['time_range'])
+							{
+								echo $display['time_range'];
+								echo "<br>";								
+							}
+						}
+					}
+					//weekend
+					else if ($task_config['weekend'])
+					{
+						foreach ($task_config['weekend'] as $display) {
+							echo $display['content'];
+							echo "<br>";
+							if($display['time_range'])
+							{
+								echo $display['time_range'];
+								echo "<br>";								
+							}
+						}
+					}
 				}
-				else
-					echo "class=unknown ";
-				if ($i < 5)
-					echo "id='week-$i-A'>按点睡觉<br>（23:00前入睡，<br>7:00-7:30之间起床）</td>";
-				else
-					echo "id='week-$i-A'>按点睡觉<br>（23:30前入睡，<br>9:30前起床）</td>";
+				if ($i < 5 || $task_config['weekend'])
+					echo "</tr>";
 			}
-			?>
-		</tr>
-		<tr>
-			<?php
-			//task B
-			for ($i = 0; $i < 7; $i++)
-			{
-				echo "<td ";
-				if (array_key_exists($i, $task_B_array))
-				{
-					if($task_B_array[$i] == null)
-						echo "class=unknown ";
-					elseif($task_B_array[$i] == 1)
-						echo "class=pass ";
-					elseif ($task_B_array[$i] == 0)
-						echo "class=fail ";
-				}
-				else
-					echo "class=unknown ";
-				if ($i < 5)
-					echo "id='week-$i-B'>申论模考<br>或 行测补考及解析<br>9:30-11:30</td>";
-				else
-					echo "id='week-$i-B'>行测模考<br>10:00-12:00</td>";
-			}
-			?>
-		</tr>
-		<tr>
-			<?php
-			//task C
-			for ($i = 0; $i < 7; $i++)
-			{
-				echo "<td ";
-				if (array_key_exists($i, $task_C_array))
-				{
-					if($task_C_array[$i] == null)
-						echo "class=unknown ";
-					elseif($task_C_array[$i] == 1)
-						echo "class=pass ";
-					elseif ($task_C_array[$i] == 0)
-						echo "class=fail ";
-				}
-				else
-					echo "class=unknown ";
-				if ($i < 5)
-					echo "id='week-$i-C'>午睡<br>（12:00-13:30）</td>";
-				else
-					echo "id='week-$i-C'>午睡<br>（12:30-14:30）</td>";
-			}
-			?>
-		</tr>
-		<tr>
-			<?php
-			//task D
-			for ($i = 0; $i < 7; $i++)
-			{
-				echo "<td ";
-				if (array_key_exists($i, $task_D_array))
-				{
-					if($task_D_array[$i] == null)
-						echo "class=unknown ";
-					elseif($task_D_array[$i] == 1)
-						echo "class=pass ";
-					elseif ($task_D_array[$i] == 0)
-						echo "class=fail ";
-				}
-				else
-					echo "class=unknown ";
-				if ($i < 5)
-					echo "id='week-$i-D'>行测模考<br>（13:30-15:30）<br>申论解析<br>（15:30-17:00）</td>";
-				else
-					echo "id='week-$i-D'>行测补考及解析<br>（14:30-16:30）</td>";
-			}
-			?>
-		</tr>
-		<tr>
-			<?php
-			//task E
-			for ($i = 0; $i < 5; $i++)
-			{
-				echo "<td ";
-				if (array_key_exists($i, $task_E_array))
-				{
-					if($task_E_array[$i] == null)
-						echo "class=unknown ";
-					elseif($task_E_array[$i] == 1)
-						echo "class=pass ";
-					elseif ($task_E_array[$i] == 0)
-						echo "class=fail ";
-				}
-				else
-					echo "class=unknown ";
-				echo "id='week-$i-E'>行测补考及解析<br>或 视频课程<br>（19:00-21:00）</td>";
-			}
-			?>
-		</tr>
+		?>
 		<!-- <?= $tableStr ?> -->
 	</table>
 </div>
