@@ -45,6 +45,8 @@ class Schedule extends CI_Controller {
 			$week = date('W');
 		}
 
+		$uid = 1;
+
 		$this->load->model('My_calendar_model');
 
 		//handle the ajax case
@@ -53,7 +55,7 @@ class Schedule extends CI_Controller {
 			$flag = $this->input->post('flag');
 
 			$this->My_calendar_model->trigger_task_in_weekly_calendar(
-				"$w_day", "$task", "$flag"
+				"$w_day", "$task", "$flag", "$uid", "$year", "$week"
 			);
 		}
 
