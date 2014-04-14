@@ -58,7 +58,7 @@
 													)
 										),
 						'w_days_array' => array(),
-						"value" => 1
+						"value" => 2
 						),
 			'C' => array( 
 						'work_day' => array( 
@@ -89,7 +89,7 @@
 													)
 										),
 						'w_days_array' => array(),
-						"value" => 1
+						"value" => 2
 						),
 			'E' => array( 
 						'work_day' => array( 
@@ -99,7 +99,7 @@
 						    			),
 						'weekend' => null,
 						'w_days_array' => array(),
-		    			"value" => 1
+		    			"value" => 2
 						)
 			);
 
@@ -182,6 +182,41 @@
 					echo "</tr>";
 			}
 		?>
+
+		<tr>
+			<?php
+			for ($i = 0, $score = 0, $finished_tasks = 0; $i < 7; $i++, $score = 0, $finished_tasks = 0)
+			{
+				foreach ($tasks_array as $task_type => $task_config) {
+					if (array_key_exists($i, $task_config['w_days_array']) 
+						&& $task_config['w_days_array'][$i] == 1)
+					{
+						$score += $task_config['value'];
+						$finished_tasks++;
+					}
+				};
+				if ($finished_tasks >= 3)
+					$score++;
+				if ($i < 5 && $finished_tasks == 5)
+				{
+					$score = 10;
+				}
+				elseif ($i >= 5 && $finished_tasks == 4)
+				{
+					$score = 10;
+				}
+				echo "<td";
+				if ($score == 10)
+					echo " class=awesome ";
+				elseif ($score > 30/7)
+					echo " class=pass ";
+				else
+					echo " class=fail ";
+				echo ">";
+				echo "$score</td>";
+			}
+			?>
+		</tr>
 		<!-- <?= $tableStr ?> -->
 	</table>
 </div>
