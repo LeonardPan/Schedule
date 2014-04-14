@@ -107,6 +107,32 @@
 			$tasks_array[$task->task]['w_days_array'][$task->w_day] = $task->flag;
 		}
 
+		$score_array = array();
+		$finished_tasks_array = array();
+		for ($i = 0, $score = 0, $finished_tasks = 0; $i < 7; $i++, $score = 0, $finished_tasks = 0)
+		{
+			foreach ($tasks_array as $task_type => $task_config) {
+				if (array_key_exists($i, $task_config['w_days_array']) 
+					&& $task_config['w_days_array'][$i] == 1)
+				{
+					$score += $task_config['value'];
+					$finished_tasks++;
+				}
+			};
+			if ($finished_tasks >= 3)
+				$score++;
+			if ($i < 5 && $finished_tasks == 5)
+			{
+				$score = 10;
+			}
+			elseif ($i >= 5 && $finished_tasks == 4)
+			{
+				$score = 10;
+			}
+			$score_array[$i] = $score;
+			$finished_tasks_array[$i] = $finished_tasks;
+		}
+
 	?>
 	<div class="navigations">
 		<div style="width: 300px;">
@@ -117,17 +143,35 @@
 			<?php echo anchor('schedule/next_week/'.$year.'/'.$week, '&nbsp', array('id' => 'nextWeek', 'title' => 'Next Week')); ?>
 		</div>
 	</div>
-	<table id="WeekTable" border="1">
-		<!-- <caption><?php echo $year."年". $month ."月" . $day . "日	星期" . $day_of_week ?></caption> -->
-		<tr>
+	<div>
+		<p class="text-center">
 			<?php
-			//table head
-			for ($i = 0; $i < 7; $i++)
+			for ($i = 0, $week_score = 0; $i < 7; $i++)
 			{
-				echo "<th>$weekarray[$i]</th>";
+				$week_score += $score_array[$i];
 			}
+			echo "恭喜！这周您已经拿到了<b>$week_score</b>分~";
 			?>
-		</tr>
+		</p>
+	</div>
+	<table id="WeekTable" border="1">
+		<?php
+		//table head
+		echo "<tr>";
+		for ($i = 0; $i < 7; $i++)
+		{
+			$day = date( "M jS, Y", strtotime($year . "W" . $week. ($i+1) ));
+			echo "<th>$day</th>";
+		}
+		echo "</tr>";
+
+		echo "<tr>";
+		for ($i = 0; $i < 7; $i++)
+		{
+			echo "<th>$weekarray[$i]</th>";
+		}
+		echo "</tr>";
+		?>		
 
 		<?php
 			foreach ($tasks_array as $task_type => $task_config) {
@@ -185,35 +229,17 @@
 
 		<tr>
 			<?php
-			for ($i = 0, $score = 0, $finished_tasks = 0; $i < 7; $i++, $score = 0, $finished_tasks = 0)
+			for ($i = 0; $i < 7; $i++)
 			{
-				foreach ($tasks_array as $task_type => $task_config) {
-					if (array_key_exists($i, $task_config['w_days_array']) 
-						&& $task_config['w_days_array'][$i] == 1)
-					{
-						$score += $task_config['value'];
-						$finished_tasks++;
-					}
-				};
-				if ($finished_tasks >= 3)
-					$score++;
-				if ($i < 5 && $finished_tasks == 5)
-				{
-					$score = 10;
-				}
-				elseif ($i >= 5 && $finished_tasks == 4)
-				{
-					$score = 10;
-				}
 				echo "<td";
-				if ($score == 10)
+				if ($score_array[$i] == 10)
 					echo " class=awesome ";
-				elseif ($score > 30/7)
+				elseif ($score_array[$i] > 30/7)
 					echo " class=pass ";
 				else
 					echo " class=fail ";
 				echo ">";
-				echo "$score</td>";
+				echo "$score_array[$i]</td>";
 			}
 			?>
 		</tr>
