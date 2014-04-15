@@ -66,4 +66,11 @@ class Schedule extends CI_Controller {
 
 		$this->load->view('includes/template.php', $data);
 	}
+
+	function display_monthly_calendar ($year = null, $month = null)
+	{
+		$data['main_content'] = 'month_form';
+		$data['view_data'] = array();
+		$this->load->view('includes/template.php', $data);
+	}
 }

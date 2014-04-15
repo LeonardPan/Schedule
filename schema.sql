@@ -16,4 +16,19 @@ create table if not exists weekly_calendar_tasks (
 );
 
 create UNIQUE INDEX index_users_weekly_tasks
-ON weekly_calendar_tasks (uid, year, week, w_day, task);
+    ON weekly_calendar_tasks (uid, year, week, w_day, task);
+
+create table if not exists monthly_calendar_score (
+    id BIGINT not null auto_increment,
+    uid BIGINT not null,
+    year INT,
+    month INT,
+    day INT,
+    score INT,
+    insert_ts DATETIME,
+    update_ts TIMESTAMP default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY(id)
+);
+
+create UNIQUE INDEX index_users_monthly_score
+    ON monthly_calendar_score (uid, year, month, day);
