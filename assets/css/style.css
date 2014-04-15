@@ -82,19 +82,31 @@ h1 {
 /*start from here*/
 
 /*table*/
-td.pass {
-	background-color:lightgreen;
+
+table.weekly_calendar {
+	margin: auto; border-collapse: collapse;
 }
 
-td.fail {
-	background-color:lightSalmon;
+.weekly_calendar td {
+	width: 150px; height: 60px; padding: 4px;
+	border: 1px solid #999;
+	vertical-align: top;
+	background-color: #DEF;
 }
 
-td.unknown {
-	background-color:white;
+.weekly_calendar td.pass {
+	background-color:#CCFFCC;
 }
 
-td.awesome {
+.weekly_calendar td.fail {
+	background-color:#CCCCCC;
+}
+
+.weekly_calendar td.unknown {
+	background-color:#DEF;
+}
+
+.weekly_calendar td.awesome {
 	background: -moz-linear-gradient(top, lightgoldenrodyellow 0%, gold 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,lightgoldenrodyellow), color-stop(100%,gold)); /* Chrome,Safari4+ */
     background: -webkit-linear-gradient(top, lightgoldenrodyellow 0%,gold 100%); /* Chrome10+,Safari5.1+ */
@@ -103,7 +115,11 @@ td.awesome {
     background: linear-gradient(top, lightgoldenrodyellow 0%,gold 100%); /* W3C */
 }
 
-/*navication*/
+.weekly_calendar td:hover {
+	background-color: #FFF;
+}
+
+/*navigation*/
 #previousYear {
     background-image: url(../imgs/arrows.png);
     background-position: 0px -85px;
@@ -187,4 +203,24 @@ td.awesome {
 .navigations div {
     float: left;    
     text-align: center;
+}
+
+/*monthly calendar*/
+.calendar {
+	font-family: Arial; font-size: 12px;
+}
+table.calendar {
+	margin: auto; border-collapse: collapse;
+}
+.calendar .days td {
+	width: 80px; height: 80px; padding: 4px;
+	border: 1px solid #999;
+	vertical-align: top;
+	background-color: #DEF;
+}
+.calendar .days td:hover {
+	background-color: #FFF;
+}
+.calendar .highlight {
+	font-weight: bold; color: #00F;
 }

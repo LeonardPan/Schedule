@@ -154,7 +154,7 @@
 			?>
 		</p>
 	</div>
-	<table id="WeekTable" border="1">
+	<table id="WeekTable" border="1" class="weekly_calendar">
 		<?php
 		//table head
 		echo "<tr>";
