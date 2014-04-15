@@ -107,12 +107,12 @@ table.weekly_calendar {
 }
 
 .weekly_calendar td.awesome {
-	background: -moz-linear-gradient(top, lightgoldenrodyellow 0%, gold 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,lightgoldenrodyellow), color-stop(100%,gold)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top, lightgoldenrodyellow 0%,gold 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top, lightgoldenrodyellow 0%,gold 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top, lightgoldenrodyellow 0%,gold 100%); /* IE10+ */
-    background: linear-gradient(top, lightgoldenrodyellow 0%,gold 100%); /* W3C */
+	background: -moz-linear-gradient(top, #CCFFCC 0%, #FFFFFF 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FFFF66), color-stop(100%,#FFFFFF)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #CCFFCC 0%,#FFFFFF 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #CCFFCC 0%,#FFFFFF 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #CCFFCC 0%,#FFFFFF 100%); /* IE10+ */
+    background: linear-gradient(top, #CCFFCC 0%,#FFFFFF 100%); /* W3C */
 }
 
 .weekly_calendar td:hover {

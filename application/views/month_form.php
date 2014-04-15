@@ -1,4 +1,5 @@
 <?php echo $view_data; ?>
+
 <script type="text/javascript">	
 	$(document).ready(function() 
 	{		
