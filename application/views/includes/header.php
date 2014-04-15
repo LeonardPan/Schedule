@@ -13,7 +13,8 @@
 	<link rel="stylesheet" href="<?php echo asset_url();?>css/style.css"
 	type="text/css" media="screen" charset="utf-8">
 	
-	<script type='text/javascript' src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+	<!-- <script type='text/javascript' src="http://code.jquery.com/jquery-1.11.0.min.js"></script> -->
+	<script type='text/javascript' src="<?php echo asset_url();?>js/jquery-1.11.0.min.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(e){
 			$('#WeekTable').click(function(e){
