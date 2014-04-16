@@ -73,7 +73,7 @@ class Schedule extends CI_Controller {
 			$year = date('Y');
 		}
 		if (!$month) {
-			$month = date('W');
+			$month = date('m');
 		}
 
 		$uid = 1;

@@ -4,6 +4,13 @@ class My_calendar_model extends CI_Model {
 	{
 		parent::__construct();
 
+		$value_array = array(
+			'A' => 1,
+			'B' => 2,
+			'C' => 1,
+			'D' => 2,
+			'E' => 2
+		);
 		
 		$this->conf = array(
 			'start_day' => 'monday',
@@ -73,10 +80,28 @@ class My_calendar_model extends CI_Model {
 
 	function generate_monthly_calendar($uid = 1, $year = null, $month = null)
 	{
+		$days_need_update_score = $this->get_new_updated_days_from_weekly_calendar();
+		foreach ($days_need_update_score as $day_object) {
+			# update its score
+			$score = 0;
+			$query = $this->db->select('task, flag')
+				->from('weekly_calendar_tasks')
+				->where('year', $day_object->year)
+				->where('month', $day_object->month)
+				->where('w_day', $day_object->w_day)
+				->get();
+			$tasks_array = $query->result();
+
+			foreach ($tasks_array as $task_object) {
+				if($task_object->flag == 1)
+					$score += $value_array[$task_object->task];
+			}
+		}
+
 		$this->load->library('calendar', $this->conf);
-		$day['year'] = $year;
-		$day['month'] = $month;
-		$day['day'] = date('d');
+		// $day['year'] = $year;
+		// $day['month'] = $month;
+		// $day['day'] = date('d');
 
 		$query = $this->db->select('day, score')
 					->from('monthly_calendar_score')
@@ -87,8 +112,11 @@ class My_calendar_model extends CI_Model {
 
 		$score_array = $query->result();
 
-		$day['score'] = $score_array;
-		//return $day;
+		$day = array();
+		foreach ($score_array as $day_score_pair) {
+			$day[$day_score_pair->day] = $day_score_pair->score;
+		}
+
 		return $this->calendar->generate($year, $month, $day);
 	}
 
@@ -140,5 +168,24 @@ class My_calendar_model extends CI_Model {
 				)
 			);
 		}
+	}
+
+	function get_new_updated_days_from_weekly_calendar()
+	{
+		$query = $this->db->select('update_ts')
+			->from('monthly_calendar_score')
+			->order_by('update_ts', 'desc')
+			->limit(1)
+			->get();
+
+		$latest_update_ts_in_monthly_calendar = $query->result()[0]->update_ts;
+
+		$query = $this->db->select('year, week, w_day')
+			->from('weekly_calendar_tasks')
+			->where('update_ts >', $latest_update_ts_in_monthly_calendar)
+			->group_by(array('year', 'week', 'w_day'))
+			->get();
+
+		return $query->result();
 	}
 }
