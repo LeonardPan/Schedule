@@ -4,7 +4,7 @@ class My_calendar_model extends CI_Model {
 	{
 		parent::__construct();
 
-		$value_array = array(
+		$this->value_array = array(
 			'A' => 1,
 			'B' => 2,
 			'C' => 1,
@@ -87,15 +87,27 @@ class My_calendar_model extends CI_Model {
 			$query = $this->db->select('task, flag')
 				->from('weekly_calendar_tasks')
 				->where('year', $day_object->year)
-				->where('month', $day_object->month)
+				->where('week', $day_object->week)
 				->where('w_day', $day_object->w_day)
 				->get();
 			$tasks_array = $query->result();
 
+			# transform from y-w-d to y-m-d
+			$lYear = date( "Y", strtotime($day_object->year . "W" . $day_object->week. $day_object->w_day ));
+			$lMonth = date( "m", strtotime($day_object->year . "W" . $day_object->week. $day_object->w_day ));
+			$lDay = date( "d", strtotime($day_object->year . "W" . $day_object->week. $day_object->w_day ));
+			echo "<th>$lYear-$lMonth-$lDay</th>";
+
 			foreach ($tasks_array as $task_object) {
 				if($task_object->flag == 1)
-					$score += $value_array[$task_object->task];
+					$score += $this->value_array[$task_object->task];
 			}
+
+			$query = $this->db->set('year', $lYear)
+						->set('month', $lMonth)
+						->set('day', $lDay)
+						->set('score', $score)
+						->on_duplicate_update('monthly_calendar_score', array('score'));
 		}
 
 		$this->load->library('calendar', $this->conf);
