@@ -54,6 +54,10 @@ class Schedule extends CI_Controller {
 			$w_day = $this->input->post('w_day');
 			$flag = $this->input->post('flag');
 
+			// echo ' <script type="text/javascript">
+			// 			alert("Test message box under ajax!");
+			// 	</script>';
+
 			$this->My_calendar_model->trigger_task_in_weekly_calendar(
 				"$w_day", "$task", "$flag", "$uid", "$year", "$week"
 			);
