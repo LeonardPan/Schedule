@@ -15,7 +15,7 @@ class My_calendar_model extends CI_Model {
 		$this->conf = array(
 			'start_day' => 'monday',
 			'show_next_prev' => true,
-			'next_prev_url' => base_url() . 'mycal/display'
+			'next_prev_url' => base_url() . 'index.php/'.'schedule/display_monthly_calendar'
 		);
 		
 		$this->conf['template'] = '
@@ -80,12 +80,13 @@ class My_calendar_model extends CI_Model {
 
 	function generate_monthly_calendar($uid = 1, $year = null, $month = null)
 	{
-		$days_need_update_score = $this->get_new_updated_days_from_weekly_calendar();
+		$days_need_update_score = $this->get_new_updated_days_from_weekly_calendar($uid);
 		foreach ($days_need_update_score as $day_object) {
 			# update its score
 			$score = 0;
 			$query = $this->db->select('task, flag')
 				->from('weekly_calendar_tasks')
+				->where('uid', $uid)
 				->where('year', $day_object->year)
 				->where('week', $day_object->week)
 				->where('w_day', $day_object->w_day)
@@ -96,7 +97,6 @@ class My_calendar_model extends CI_Model {
 			$lYear = date( "Y", strtotime($day_object->year . "W" . $day_object->week. $day_object->w_day ));
 			$lMonth = date( "m", strtotime($day_object->year . "W" . $day_object->week. $day_object->w_day ));
 			$lDay = date( "d", strtotime($day_object->year . "W" . $day_object->week. $day_object->w_day ));
-			echo "<th>$lYear-$lMonth-$lDay</th>";
 
 			foreach ($tasks_array as $task_object) {
 				if($task_object->flag == 1)
@@ -104,16 +104,15 @@ class My_calendar_model extends CI_Model {
 			}
 
 			$query = $this->db->set('year', $lYear)
+						->set('uid', $uid)
 						->set('month', $lMonth)
 						->set('day', $lDay)
 						->set('score', $score)
+						->set('insert_ts', date('Y-m-d H:i:s'))
 						->on_duplicate_update('monthly_calendar_score', array('score'));
 		}
 
 		$this->load->library('calendar', $this->conf);
-		// $day['year'] = $year;
-		// $day['month'] = $month;
-		// $day['day'] = date('d');
 
 		$query = $this->db->select('day, score')
 					->from('monthly_calendar_score')
@@ -182,10 +181,11 @@ class My_calendar_model extends CI_Model {
 		}
 	}
 
-	function get_new_updated_days_from_weekly_calendar()
+	function get_new_updated_days_from_weekly_calendar($uid)
 	{
 		$query = $this->db->select('update_ts')
 			->from('monthly_calendar_score')
+			->where('uid', $uid)
 			->order_by('update_ts', 'desc')
 			->limit(1)
 			->get();
