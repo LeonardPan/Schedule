@@ -124,10 +124,32 @@ function &DB($params = '', $active_record_override = NULL)
 	{
 		require_once(BASEPATH.'database/DB_active_rec.php');
 
-		if ( ! class_exists('CI_DB'))
-		{
-			eval('class CI_DB extends CI_DB_active_record { }');
-		}
+		// get the CI insance
+		$CI = & get_instance();
+
+		$prefix = $CI->config->item('subclass_prefix');
+
+		if (file_exists(APPPATH.'core/'.$prefix.'DB_active_rec.php'))
+	   {
+	       require_once(APPPATH.'core/'.$prefix.'DB_active_rec.php');
+	 
+	       if ( ! class_exists('CI_DB'))
+	       {
+	         eval('class CI_DB extends '.$prefix.'DB_active_record { }');
+	       }
+	   } 
+	   else 
+	   {
+	       if ( ! class_exists('CI_DB'))
+	       {
+	         eval('class CI_DB extends CI_DB_active_record { }');
+	       }
+	   } 
+
+		// if ( ! class_exists('CI_DB'))
+		// {
+		// 	eval('class CI_DB extends CI_DB_active_record { }');
+		// }
 	}
 	else
 	{

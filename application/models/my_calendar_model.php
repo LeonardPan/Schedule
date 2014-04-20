@@ -190,7 +190,15 @@ class My_calendar_model extends CI_Model {
 			->limit(1)
 			->get();
 
-		$latest_update_ts_in_monthly_calendar = $query->result()[0]->update_ts;
+		$latest_update_ts_in_monthly_calendar = $query->result();
+		if (sizeof($latest_update_ts_in_monthly_calendar) == 0)
+		{
+			$latest_update_ts_in_monthly_calendar = '1990-00-01 00:01:00';
+		}
+		else
+		{
+			$latest_update_ts_in_monthly_calendar = $latest_update_ts_in_monthly_calendar[0]->update_ts;
+		}
 
 		$query = $this->db->select('year, week, w_day')
 			->from('weekly_calendar_tasks')
